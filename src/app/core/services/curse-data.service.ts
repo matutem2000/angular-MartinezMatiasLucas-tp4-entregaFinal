@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { Curse } from '../../layouts/dashboard/pages/curses/models/curses.interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { LoadingService } from './loading.service';
-import { BehaviorSubject, map, Observable, delay, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, delay, of, catchError, switchMap, mergeMap } from 'rxjs';
 import { ModificarProfesorCursoComponent } from '../../layouts/dashboard/pages/curses/components/modificar-profesor-curso/modificar-profesor-curso.component';
 import { ModificarCursoComponent } from '../../layouts/dashboard/pages/curses/components/modificar-curso/modificar-curso.component';
 import { EliminarCursoComponent } from '../../layouts/dashboard/pages/curses/components/eliminar-curso/eliminar-curso.component';
 import { CurseFormCrearComponent } from '../../layouts/dashboard/pages/curses/components/curse-form-crear/curse-form-crear.component';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { CoursesRoutingModule } from '../../layouts/dashboard/pages/curses/curses-routing.module';
 
 
-let CURSES_DB:Curse[] = [
-  
-  
-];
-
+let CURSES_DB:Curse[] = [];
+const URL_CURSES= `${environment.apiURL}/courses`;
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +23,26 @@ export class CurseDataService {
   curses$: Observable<Curse[]> = this.curseSubject.asObservable();
 
 
-  constructor(public dialog: MatDialog, private loadingService: LoadingService){};
+  constructor(
+    public dialog: MatDialog, 
+    private loadingService: LoadingService,
+    private httpClient: HttpClient){};
 
  
 //obtener usuarios
 getCurses() {
-    return of (CURSES_DB).pipe(delay(3000));
+    return this.httpClient.get<Curse[]>(URL_CURSES
+    ).pipe(catchError(()=>{
+      alert("Error al cargar los cursos");
+      return of(CURSES_DB);
+    }))
+}
+
+//crear cursos
+createCurse(payload: Curse){
+  return this.httpClient
+  .post<Curse>(URL_CURSES,{ ...payload})
+  .pipe(mergeMap(()=> this.getCurses()));
 }
 
 //Guardar cursos
@@ -38,18 +52,19 @@ guardarCurso(curso: Curse): Observable<Curse[]> {
   });
 
   return dialogRef.afterClosed().pipe(
-    map((cursoNuevo: Curse) => {
-      if (cursoNuevo) {
-        console.log('Curso existente:', cursoNuevo);
-        // Modificar el curso en la base de datos
-        
+    switchMap((curso: Curse) => {
+      if (curso) {
+        console.log('esto es el curso a guardar dentro del servicio', curso);
+        return this.createCurse(curso);
+      } else {
+        // Si el usuario cancela la creación, devolver la lista actual de cursos sin cambios
+        return this.getCurses();
       }
-      console.log('es un curso nuevo');
-      return [...CURSES_DB];
     })
   );
   
-} 
+}
+
 
   modificarCurso(curso: Curse): Observable<Curse[]> {
     console.log('Curso recibido a modificar', curso);
@@ -58,16 +73,17 @@ guardarCurso(curso: Curse): Observable<Curse[]> {
     });
 
     return dialogRef.afterClosed().pipe(
-      map((cursoModificado: Curse) => {
-        if (cursoModificado) {
-          console.log('Datos del curso modificado:', cursoModificado);
-          // Modificar el curso en la base de datos
-          CURSES_DB = CURSES_DB.map((c) =>
-            c.id === cursoModificado.id ? { ...c, ...cursoModificado } : c
+      switchMap((modificado: boolean) => {
+        if (modificado) {
+          // Si el usuario confirma la modificación, realizar la solicitud HTTP PUT
+          return this.httpClient.put<Curse>(`${URL_CURSES}/${curso.id}`, modificado).pipe(
+            // Obtener la lista actualizada de usuarios después de modificar el usuario
+            switchMap(() => this.getCurses())
           );
-          console.log('El nuevo array de cursos con la modificación', CURSES_DB);
+        } else {
+          // Si el usuario cancela la modificación, devolver la lista actual de usuarios sin cambios
+          return this.getCurses();
         }
-        return [...CURSES_DB];
       })
     );
     
@@ -75,19 +91,23 @@ guardarCurso(curso: Curse): Observable<Curse[]> {
 
   // Eliminar cuso
 eliminarCurso(curso: Curse): Observable<Curse[]> {
-  //console.log('eliminar en user-data.service- apreté botón');
  const dialogRef = this.dialog.open(EliminarCursoComponent, {
    data: { curso },
  });
  
  return dialogRef.afterClosed().pipe(
-   map((eliminado: boolean) => {
-     if (eliminado) {
-       // Eliminar el curso del dataSource
-       CURSES_DB = CURSES_DB.filter(u => u.id !== curso.id);
-     }
-     return [...CURSES_DB];
-   })
+   switchMap((eliminado: boolean) => {
+    if (eliminado) {
+      // Si el usuario confirma la eliminación, realizar la solicitud HTTP DELETE
+      return this.httpClient.delete(`${URL_CURSES}/${curso.id}`).pipe(
+        // Obtener la lista actualizada de usuarios después de eliminar el usuario
+        switchMap(() => this.getCurses())
+      );
+    } else {
+      // Si el usuario cancela la eliminación, devolver la lista actual de usuarios sin cambios
+      return this.getCurses();
+    }
+  })
  );
 
 }

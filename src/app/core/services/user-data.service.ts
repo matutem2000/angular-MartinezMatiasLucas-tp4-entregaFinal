@@ -32,14 +32,8 @@ export class UserDataService {
  }
 //obtener usuarios
   getUsuarios() {
-   /* let headers = new HttpHeaders(); 
-
-  headers= headers.append('x-token', localStorage.getItem('token') || ''); */
-
+   
     return this.httpClient.get<Usuario[]>(URL_USERS
-     /*  , {
-      headers: headers,
-    } */
     ).pipe(catchError(()=>{
       alert("Error al cargar los usuarios");
       return of(USERS_DB);
