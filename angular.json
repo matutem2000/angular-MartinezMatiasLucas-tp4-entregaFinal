@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-MartinezMatiasLucas-tp3": {
+    "Martinez-Matias-Lucas-entrega1": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular-martinez-matias-lucas-tp3",
+            "outputPath": "dist/martinez-matias-lucas-entrega1",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -37,12 +37,23 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./src/assets/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./src/assets/js/bootstrap.min.js",
+              "./src/assets/js/bootstrap.bundle.min.js",
+              "./src/assets/js/popper.min.js"
+            ]
           },
           "configurations": {
             "production": {
+              "fileReplacements":[
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -69,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-MartinezMatiasLucas-tp3:build:production"
+              "buildTarget": "Martinez-Matias-Lucas-entrega1:build:production"
             },
             "development": {
-              "buildTarget": "angular-MartinezMatiasLucas-tp3:build:development"
+              "buildTarget": "Martinez-Matias-Lucas-entrega1:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "angular-MartinezMatiasLucas-tp3:build"
+            "buildTarget": "Martinez-Matias-Lucas-entrega1:build"
           }
         },
         "test": {
