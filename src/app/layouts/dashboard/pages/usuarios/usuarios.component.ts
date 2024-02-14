@@ -26,7 +26,6 @@ export class UsuariosComponent implements OnInit{
     this.userDataService.getUsuarios().subscribe({
       next: (usuario) =>{
         this.dataSource=usuario;
-        console.log(this.dataSource);
       },
       complete: () => {
         this.loadingService.setIsLoading(false);

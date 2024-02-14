@@ -28,13 +28,13 @@
       "token": "abcde4"
     },
     {
-      "id": "3074",
-      "nombre": "Hola",
-      "apellido": "Hola2",
-      "email": "hola@mail.com",
-      "password": "hola123",
-      "rol": "administrador",
-      "token": "9q2e3"
+      "id": "f900",
+      "nombre": "Pepe",
+      "apellido": "Grillo",
+      "email": "pgrillo@example.com",
+      "password": "clave123",
+      "rol": "profesor",
+      "token": "aS49O"
     }
   ],
   "courses": [
@@ -45,6 +45,18 @@
     {
       "id": "2",
       "nombre": "Estructuras de Datossss"
+    },
+    {
+      "id": "5d86",
+      "nombre": "hola"
+    },
+    {
+      "id": "2652",
+      "nombre": "Desarrollo web"
+    },
+    {
+      "id": "9d0b",
+      "nombre": "otra cosa"
     }
   ]
 }

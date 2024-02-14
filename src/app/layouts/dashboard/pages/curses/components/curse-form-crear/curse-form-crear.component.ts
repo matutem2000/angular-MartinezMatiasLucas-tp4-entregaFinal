@@ -21,26 +21,25 @@ export class CurseFormCrearComponent  {
     });
   }
   onSubmit() {
-    console.log('entre al metodo del componente curse-form-crear');
     if (this.materiaForm.valid) {
       const nombre = this.materiaForm.value.nombre;
+      console.log('este es el nombre del curso', nombre);
+      this.curseDataService.guardarCurso(nombre).subscribe(
+        () => {
+          console.log('El curso se guardó correctamente.');
+        },
+        error => {
+          console.error('Error al guardar el curso:', error);
+          alert('Error al guardar el curso. Consulte la consola para obtener más detalles.');
+        }
+        
+      );
+      
+       // Cerrar el diálogo después de guardar
+       this.dialogRef.close();
 
-      // Obtener la cantidad actual de cursos y generar el nuevo id
-      this.curseDataService.getCurses().subscribe(curses => {
-        const nuevoId = curses.length + 1;
-
-        // Crear el nuevo curso
-        const nuevoCurso: Curse = { id: nuevoId, nombre };
-          console.log(nuevoCurso);
-        // Guardar el nuevo curso en tu servicio de datos
-        this.curseDataService.guardarCurso(nuevoCurso);
-
-        // Cerrar el diálogo después de guardar
-        this.dialogRef.close();
-
-        // También puedes cerrar el formulario, limpiar los campos, etc.
-        this.materiaForm.reset();
-      });
+       // También puedes cerrar el formulario, limpiar los campos, etc.
+       this.materiaForm.reset();
     }
   }
   

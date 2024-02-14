@@ -24,7 +24,6 @@ export class CursesComponent {
     this.curseDataService.getCurses().subscribe({
       next: (cursos) =>{
         this.dataSourceCurse=cursos;
-        console.log(this.dataSourceCurse);
       },
       complete: () => {
         this.loadingService.setIsLoading(false);
@@ -40,8 +39,9 @@ export class CursesComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataSourceCurse =[...result];
-      console.log('cursos al dialogo', result);  
+
+          this.ngOnInit();
+       
       }
     });
   };
@@ -77,70 +77,4 @@ export class CursesComponent {
       }
     }); 
   }
-
-
-  /*constructor(public dialog: MatDialog, private userDataService: UserDataService, private loadingService: LoadingService){}
-
-  //Listar usuarios
-  ngOnInit(): void {
-    //this.loadingService.setIsLoading(true);
-    this.userDataService.getUsuarios().subscribe({
-      next: (usuario) =>{
-        this.dataSource=usuario;
-      },
-      complete: () => {
-        console.log('entro a complete');
-        this.loadingService.setIsLoading(false);
-      }
-    });
-  }
-
-  //Crear usuario
-  onUserSubmitted(ev: Usuario): void {
-    this.loadingService.setIsLoading(true);
-    this.userDataService
-    .createUser({...ev}).subscribe({
-      next: (usuarios) =>{
-        this.dataSource=[...usuarios];
-      },
-      complete:() =>{
-        this.loadingService.setIsLoading(false);
-      }
-    })
-  }
-  
-  //Eliminar usuario
-  eliminarUsuario(usuario: Usuario): void {
-    this.loadingService.setIsLoading(true);
-    this.userDataService
-    .eliminarUsuario({...usuario}).subscribe({
-      next: (usuarios) =>{
-        //console.log('Usuarios actualizados:', usuarios);
-        this.dataSource=[...usuarios];
-      },
-      complete:() =>{
-        this.loadingService.setIsLoading(false);
-      }
-    });
-}
-
-
-  //MOdificar usuario
-  modificarUsuario(usuario: Usuario): void {
-    this.loadingService.setIsLoading(true);
-     this.userDataService
-    .modificarUsuario({...usuario}).subscribe({
-      next: (usuarios) =>{
-        //console.log('Usuarios actualizados:', usuarios);
-        this.dataSource=[...usuarios];
-      },
-      complete:() =>{
-        this.loadingService.setIsLoading(false);
-      }
-    }); 
-  }*/
-  
-  
-
-
 }

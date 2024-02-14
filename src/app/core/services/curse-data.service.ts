@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Curse } from '../../layouts/dashboard/pages/curses/models/curses.interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { LoadingService } from './loading.service';
-import { BehaviorSubject, map, Observable, delay, of, catchError, switchMap, mergeMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, delay, of, catchError, switchMap, mergeMap, tap } from 'rxjs';
 import { ModificarProfesorCursoComponent } from '../../layouts/dashboard/pages/curses/components/modificar-profesor-curso/modificar-profesor-curso.component';
 import { ModificarCursoComponent } from '../../layouts/dashboard/pages/curses/components/modificar-curso/modificar-curso.component';
 import { EliminarCursoComponent } from '../../layouts/dashboard/pages/curses/components/eliminar-curso/eliminar-curso.component';
@@ -28,6 +28,7 @@ export class CurseDataService {
     private loadingService: LoadingService,
     private httpClient: HttpClient){};
 
+    
  
 //obtener usuarios
 getCurses() {
@@ -38,33 +39,17 @@ getCurses() {
     }))
 }
 
-//crear cursos
-createCurse(payload: Curse){
-  return this.httpClient
-  .post<Curse>(URL_CURSES,{ ...payload})
-  .pipe(mergeMap(()=> this.getCurses()));
-}
-
 //Guardar cursos
-guardarCurso(curso: Curse): Observable<Curse[]> {
-  const dialogRef = this.dialog.open(CurseFormCrearComponent, {
-    data: { curso },
-  });
 
-  return dialogRef.afterClosed().pipe(
-    switchMap((curso: Curse) => {
-      if (curso) {
-        console.log('esto es el curso a guardar dentro del servicio', curso);
-        return this.createCurse(curso);
-      } else {
-        // Si el usuario cancela la creación, devolver la lista actual de cursos sin cambios
-        return this.getCurses();
-      }
-    })
-  );
-  
+guardarCurso(nombre: Curse): Observable<Curse[]> {
+  return this.httpClient
+    .post<Curse>(URL_CURSES, { nombre })
+    .pipe(
+      switchMap(() => this.getCurses().pipe(
+        tap(curses => console.log('Valores devueltos por getCurses() dentro de guardarCurso:', curses))
+      ))
+    );
 }
-
 
   modificarCurso(curso: Curse): Observable<Curse[]> {
     console.log('Curso recibido a modificar', curso);
