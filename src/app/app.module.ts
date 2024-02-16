@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,9 @@ import { UsuariosRoutingModule } from './layouts/dashboard/pages/usuarios/usuari
 import {MatIconModule} from '@angular/material/icon';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appReducers } from './core/store';
 
 
 @NgModule({
@@ -38,7 +41,9 @@ import { HttpClientModule } from '@angular/common/http';
     UsuariosRoutingModule,
     MatIconModule,
     SharedModule, 
-    HttpClientModule
+    HttpClientModule, 
+    StoreModule.forRoot(appReducers, {}), 
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [LoadingService],
   bootstrap: [AppComponent]
