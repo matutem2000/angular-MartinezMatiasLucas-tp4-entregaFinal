@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
-// import { LoginData } from '../../models/login.interface';
 
 @Component({
   selector: 'app-login',
@@ -9,30 +8,35 @@ import { AuthService } from './auth.service';
   styleUrls: ['./login.component.scss'], 
 })
 
-
 export class LoginComponent {
-  
   loginForm: FormGroup;
-  mostrarPass= false;
-  
+  mostrarPass = false;
+  errorMessage: string = '';
 
-  // Constructor para inicializar el formulario
-  constructor(private authService: AuthService,
-    private fb: FormBuilder) {
+  constructor(private authService: AuthService, private fb: FormBuilder) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
   }
 
-  // Método que se ejecuta cuando se envía el formulario
   onSubmit(): void {
-if(this.loginForm.invalid) {
-  this.loginForm.markAllAsTouched();     
-}else {
-  console.log(this.loginForm.value);
-  this.authService.login(this.loginForm.value).subscribe();
-}
-  
-};
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();     
+    } else {
+      this.authService.login(this.loginForm.value).subscribe(
+        () => {
+        },
+        (error) => {
+          if (error.status === 401) {
+            this.errorMessage = 'Credenciales incorrectas.';
+          } else if (error.status === 0) {
+            this.errorMessage = 'Error al conectar con el servidor. Por favor, intenta de nuevo más tarde.';
+          } else {
+            this.errorMessage = 'Ha ocurrido un error. Por favor, intenta de nuevo más tarde.';
+          }
+        }
+      );
+    }
+  }
 }

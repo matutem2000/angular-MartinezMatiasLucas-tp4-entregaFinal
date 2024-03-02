@@ -7,7 +7,6 @@
           loginForm.get("email")?.errors| autenticationErrors
           }}</mat-error>
       </mat-form-field>
-    
       <mat-form-field>
         <input matInput [type]="mostrarPass ? 'text' : 'password'" placeholder="Contraseña" formControlName="password">
         <mat-error>{{
@@ -17,11 +16,11 @@
           <mat-icon>{{ mostrarPass ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
       </mat-form-field>
-      
-     
       <button mat-raised-button color="primary" type="submit">Iniciar Sesión</button>
     </form>
 </div>
+
+
 
 
   

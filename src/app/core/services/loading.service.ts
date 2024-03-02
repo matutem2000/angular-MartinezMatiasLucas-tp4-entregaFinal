@@ -9,7 +9,6 @@ export class LoadingService {
     public isLoading$= this.loadingTriggered$.asObservable();
 
     setIsLoading(value: boolean): void{
-        console.log('el valor en el loading.service.ts',value);
             this.loadingTriggered$.next(value);
     }
 }

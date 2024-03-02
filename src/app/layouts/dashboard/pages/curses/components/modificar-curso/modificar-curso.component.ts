@@ -43,7 +43,6 @@ export class ModificarCursoComponent {
      onSubmit(): void {
       if (this.cursoFormModif.valid) {
         const cursoModificado: Curse = this.cursoFormModif.value;
-        console.log("curso modificado:", cursoModificado);
         this.dialogRef.close(cursoModificado);
       }
     }

@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "@ngrx/effects": "^17.1.0",
     "@ngrx/store": "^17.1.0",
     "@ngrx/store-devtools": "^17.1.0",
     "rxjs": "~7.8.0",
@@ -30,6 +31,7 @@
     "@angular-devkit/build-angular": "^17.0.10",
     "@angular/cli": "^17.0.10",
     "@angular/compiler-cli": "^17.0.0",
+    "@ngrx/schematics": "^17.1.1",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
@@ -43,5 +45,6 @@
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.",
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": []
 }

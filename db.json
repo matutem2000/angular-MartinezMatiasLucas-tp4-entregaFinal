@@ -2,12 +2,12 @@
   "users": [
     {
       "id": "1",
-      "nombre": "Juanssssssssss",
+      "nombre": "Juan",
       "apellido": "Pérez",
       "email": "juan@example.com",
       "password": "clave123",
       "rol": "estudiante",
-      "token": "abcde1"
+      "token": "abcde2254"
     },
     {
       "id": "2",
@@ -35,6 +35,15 @@
       "password": "clave123",
       "rol": "profesor",
       "token": "aS49O"
+    },
+    {
+      "id": "a747",
+      "nombre": "Soy",
+      "apellido": "Yo",
+      "email": "syo@example.com",
+      "password": "clave123",
+      "rol": "profesor",
+      "token": "BBVj3"
     }
   ],
   "courses": [
@@ -51,12 +60,44 @@
       "nombre": "hola"
     },
     {
-      "id": "2652",
+      "id": "3",
       "nombre": "Desarrollo web"
     },
     {
       "id": "9d0b",
       "nombre": "otra cosa"
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": "1",
+      "userId": "1",
+      "courseId": "2"
+    },
+    {
+      "id": "8367",
+      "userId": "2",
+      "courseId": "3"
+    },
+    {
+      "id": "6cfd",
+      "userId": "4",
+      "courseId": "1"
+    },
+    {
+      "id": "d4f5",
+      "userId": "1",
+      "courseId": "3"
+    },
+    {
+      "id": "3b1e",
+      "userId": "4",
+      "courseId": "3"
+    },
+    {
+      "id": "8cdb",
+      "userId": "1",
+      "courseId": "1"
     }
   ]
 }

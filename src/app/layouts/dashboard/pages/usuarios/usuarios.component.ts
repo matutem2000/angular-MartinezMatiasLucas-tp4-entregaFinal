@@ -13,11 +13,17 @@ import { LoadingService } from '../../../../core/services/loading.service';
 
 
 export class UsuariosComponent implements OnInit{
+  showButton: boolean;
   displayedColumns: string[] = ['id', 'apellidoYnombre', 'email', 'rol', 'acciones'];
   dataSource: Usuario[] = [];
   
   
-  constructor(public dialog: MatDialog, private userDataService: UserDataService, private loadingService: LoadingService){}
+  constructor(
+              public dialog: MatDialog, 
+              private userDataService: UserDataService, 
+              private loadingService: LoadingService){
+                this.showButton = !this.userDataService.getUserRol();
+              }
 
   //Listar usuarios
   ngOnInit(): void {
@@ -53,7 +59,6 @@ export class UsuariosComponent implements OnInit{
     this.userDataService
     .eliminarUsuario({...usuario}).subscribe({
       next: (usuarios) =>{
-        //console.log('Usuarios actualizados:', usuarios);
         this.dataSource=[...usuarios];
       },
       complete:() =>{
@@ -69,7 +74,6 @@ export class UsuariosComponent implements OnInit{
      this.userDataService
     .modificarUsuario({...usuario}).subscribe({
       next: (usuarios) =>{
-        //console.log('Usuarios actualizados:', usuarios);
         this.dataSource=[...usuarios];
       },
       complete:() =>{

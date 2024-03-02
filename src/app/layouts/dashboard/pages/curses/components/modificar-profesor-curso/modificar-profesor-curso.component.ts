@@ -62,40 +62,4 @@ export class ModificarProfesorCursoComponent {
         nombreCurso: this.data.curso.nombre
       });
     }
-    
-
-    /* ngOnInit() {
-      // Cargar datos del usuario en el formulario al inicializar el componente
-      this.cargarDatosUsuario();
-    }
-  
-    cargarDatosUsuario() {
-      // Patch los valores del usuario en el formulario
-      this.profesorCursoFormModif.patchValue({
-        id: this.data.usuario.id,
-        nombre: this.data.usuario.nombre,
-        apellido: this.data.usuario.apellido,
-        email: this.data.usuario.email,
-        password: this.data.usuario.password,
-        rol: this.data.usuario.rol
-      });
-    }
-  
-  
-     onSubmit(): void {
-      if (this.profesorCursoFormModif.valid) {
-        const usuarioModificado: Usuario = this.profesorCursoFormModif.value;
-        console.log("Usuario modificado:", usuarioModificado);
-        this.dialogRef.close(usuarioModificado);
-      }
-    }
-    
-
-// 
-  cerrarModal() {
-    this.dialogRef.close(); // Cierra el diálogo
-  } */
-
-
-
 }

@@ -20,7 +20,6 @@ export class DashboardComponent {
               }
 
   logout(): void {
-    console.log('boton logout funcionally');
     this.authService.logout();
   }
 }

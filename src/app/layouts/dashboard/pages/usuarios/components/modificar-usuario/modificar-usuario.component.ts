@@ -50,7 +50,6 @@ export class ModificarUsuarioComponent {
      onSubmit(): void {
       if (this.usuarioFormModif.valid) {
         const usuarioModificado: Usuario = this.usuarioFormModif.value;
-        console.log("Usuario modificado:", usuarioModificado);
         this.dialogRef.close(usuarioModificado);
       }
     }

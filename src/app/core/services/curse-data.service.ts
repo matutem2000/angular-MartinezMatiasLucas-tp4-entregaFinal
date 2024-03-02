@@ -46,13 +46,12 @@ guardarCurso(nombre: Curse): Observable<Curse[]> {
     .post<Curse>(URL_CURSES, { nombre })
     .pipe(
       switchMap(() => this.getCurses().pipe(
-        tap(curses => console.log('Valores devueltos por getCurses() dentro de guardarCurso:', curses))
+        tap(curses => curses)
       ))
     );
 }
 
   modificarCurso(curso: Curse): Observable<Curse[]> {
-    console.log('Curso recibido a modificar', curso);
     const dialogRef = this.dialog.open(ModificarCursoComponent, {
       data: { curso },
     });

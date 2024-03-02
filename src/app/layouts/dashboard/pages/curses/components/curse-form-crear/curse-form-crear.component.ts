@@ -23,7 +23,6 @@ export class CurseFormCrearComponent  {
   onSubmit() {
     if (this.materiaForm.valid) {
       const nombre = this.materiaForm.value.nombre;
-      console.log('este es el nombre del curso', nombre);
       this.curseDataService.guardarCurso(nombre).subscribe(
         () => {
           console.log('El curso se guardó correctamente.');

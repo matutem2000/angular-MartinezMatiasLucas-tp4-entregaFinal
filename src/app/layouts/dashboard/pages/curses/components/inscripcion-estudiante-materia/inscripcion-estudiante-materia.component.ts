@@ -47,7 +47,6 @@ export class InscripcionEstudianteMateriaComponent implements OnInit {
           estudiante: this.selectedEstudiante
         });
       }
-      console.log(this.asignaciones);
   };
 }
   

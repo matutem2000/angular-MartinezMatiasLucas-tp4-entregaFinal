@@ -1,6 +1,6 @@
 
   <h1 tituloGrande>Listado cursos</h1>
-  <button mat-icon-button color="primary" (click)="agregarNuevoCurse()">
+  <button *ngIf="showButton" mat-icon-button color="primary" (click)="agregarNuevoCurse()">
     <mat-icon>add</mat-icon>
   </button>
   
@@ -16,12 +16,15 @@
             </ng-container>
         
             <ng-container matColumnDef="acciones">
-              <th class="text-center" mat-header-cell *matHeaderCellDef> Acciones </th>
+              <th class="text-center" mat-header-cell *matHeaderCellDef> 
+                <span *ngIf="showButton" >
+                  Acciones
+                </span> </th>
               <td class="text-center" mat-cell *matCellDef="let element">
-                 <button mat-icon-button (click)="modificarCurso(element)">
+                 <button *ngIf="showButton"  mat-icon-button (click)="modificarCurso(element)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button (click)="eliminarCurse(element)">
+                <button *ngIf="showButton"  mat-icon-button (click)="eliminarCurse(element)">
                   <mat-icon >delete</mat-icon>
                 </button> 
               </td>

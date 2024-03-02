@@ -32,14 +32,19 @@ export class UserDataService {
  }
 //obtener usuarios
   getUsuarios() {
-   
     return this.httpClient.get<Usuario[]>(URL_USERS
     ).pipe(catchError(()=>{
       alert("Error al cargar los usuarios");
       return of(USERS_DB);
     }));
-  
 }
+
+//obtener rol usuario
+getUserRol(): boolean {
+  const userRol = localStorage.getItem('userRole');
+  return userRol === 'estudiante' || userRol === 'profesor';
+}
+
 //crear usuarios
   createUser(payload: Usuario){
     return this.httpClient
@@ -74,7 +79,6 @@ eliminarUsuario(usuario: Usuario): Observable<Usuario[]> {
 
 //Modificar usuario
 modificarUsuario(usuario: Usuario): Observable<Usuario[]> {
-  console.log('Usuario recibido a modificar', usuario);
   const dialogRef = this.dialog.open(ModificarUsuarioComponent, {
     data: { usuario },
   });
@@ -97,8 +101,13 @@ modificarUsuario(usuario: Usuario): Observable<Usuario[]> {
 
 
 //Obtener usuario por rol
-getUsuariosPorRol(rol: string): Observable<Usuario[]> {
-  const usuariosFiltrados = USERS_DB.filter(usuario => usuario.rol === rol);
-  return of(usuariosFiltrados);
-}
+
+
+ getUsuariosPorRol(rol: string): Observable<Usuario[]> {
+  
+  return this.httpClient.get<Usuario[]>(`${environment.apiURL}/users?rol=${rol}`)
+} 
+
+
+
 }

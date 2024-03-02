@@ -71,19 +71,14 @@ asignarCurse() {
         apellidoProfesor: this.selectedProfesor.apellido,
         nombreCurso: this.selectedCurso.nombre
       };
-
       this.asignacionesProfesor.push(nuevaAsignacion);
-    
-    console.log('Deseo mostrar el nuevo array de objetos',this.asignacionesProfesor);
-
-    this.mostrarAsignaciones();
+      this.mostrarAsignaciones();
   }
 }
 
 
 // Método para mostrar las asignaciones de cursos
 mostrarAsignaciones() {
- // console.log('Listado de cursos asignados:');
   this.asignacionesProfesor.forEach(asignacion => {
   });
 }

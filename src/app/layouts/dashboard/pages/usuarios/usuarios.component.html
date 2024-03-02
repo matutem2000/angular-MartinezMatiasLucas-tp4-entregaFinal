@@ -1,5 +1,5 @@
 
-<div class="mb-3">
+<div *ngIf="showButton" class="mb-3">
   <app-user-form-crear (usuarioCreado)="onUserSubmitted($event)"></app-user-form-crear>
 </div>
 
@@ -27,13 +27,15 @@
             <td class="text-center" mat-cell *matCellDef="let element"> {{element.rol}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="acciones">
-            <th class="text-center" mat-header-cell *matHeaderCellDef> Acciones </th>
+          <ng-container  matColumnDef="acciones">
+              <th class="text-center" mat-header-cell *matHeaderCellDef> 
+                <span *ngIf="showButton">Acciones </span> 
+              </th>
             <td class="text-center" mat-cell *matCellDef="let element">
-              <button mat-icon-button (click)="modificarUsuario(element)">
+              <button *ngIf="showButton" mat-icon-button (click)="modificarUsuario(element)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button (click)="eliminarUsuario(element)">
+              <button *ngIf="showButton" mat-icon-button (click)="eliminarUsuario(element)">
                 <mat-icon >delete</mat-icon>
               </button>
             </td>

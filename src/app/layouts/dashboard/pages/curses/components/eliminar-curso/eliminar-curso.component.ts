@@ -38,7 +38,6 @@ export class EliminarCursoComponent {
  
  // eliminar-usuario.component.ts
 confirmarEliminar(): void {
-  console.log('Se ejecuta confirmarEliminar');
   this.cursoEliminado.emit(true);  // Emitir evento de eliminación
   this.dialogRef.close(true);
 }

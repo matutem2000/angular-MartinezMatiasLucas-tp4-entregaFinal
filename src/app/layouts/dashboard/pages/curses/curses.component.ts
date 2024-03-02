@@ -4,6 +4,7 @@ import { LoadingService } from '../../../../core/services/loading.service';
 import { CurseDataService } from '../../../../core/services/curse-data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CurseFormCrearComponent } from './components/curse-form-crear/curse-form-crear.component';
+import { UserDataService } from '../../../../core/services/user-data.service';
 
 
 @Component({
@@ -13,10 +14,17 @@ import { CurseFormCrearComponent } from './components/curse-form-crear/curse-for
 })
 export class CursesComponent {
 
+  showButton: boolean;
   displayedColumns: string[] = ['id', 'nombreCurso', 'acciones'];
   dataSourceCurse: Curse[] = [];
   cursos: Curse[] = [];
-    constructor(public dialog: MatDialog, private curseDataService: CurseDataService, private loadingService: LoadingService){}
+    constructor(
+                public dialog: MatDialog, 
+                private curseDataService: CurseDataService, 
+                private userDataService: UserDataService,
+                private loadingService: LoadingService){
+                  this.showButton = !this.userDataService.getUserRol();
+                }
 
   //Listar cursos
   ngOnInit(): void {
@@ -52,7 +60,6 @@ export class CursesComponent {
       this.curseDataService
       .eliminarCurso({...curso}).subscribe({
         next: (curso) =>{
-          //console.log('Usuarios actualizados:', usuarios);
           this.dataSourceCurse=[...curso];
         },
         complete:() =>{
@@ -69,7 +76,6 @@ export class CursesComponent {
      this.curseDataService
     .modificarCurso({...curso}).subscribe({
       next: (curso) =>{
-        //console.log('Usuarios actualizados:', usuarios);
         this.dataSourceCurse=[...curso];
       },
       complete:() =>{
